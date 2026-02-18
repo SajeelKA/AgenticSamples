@@ -4,7 +4,7 @@ The code uses "Weavile" to vectorize inputs and find the proper context from the
 
 Next, it generates the required outputs by feeding the proper context into the LLM (GPT-4o-mini)
 
-To run the file, clone the repository, make sure you have a ".env" file within this directory and input OPENAI_API_KEY=<KEY> in it
+To run the file, clone the repository, make sure you have a ".env" file within this directory and input OPENAI_API_KEY="YOUR KEY" in it
 
 Next, run the command "python InteractiveRAG.py" from the root directory
 
