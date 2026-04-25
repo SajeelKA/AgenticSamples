@@ -8,4 +8,4 @@ To run the file, clone the repository, make sure you have a ".env" file within t
 
 Next, run the command "python app.py" from the root directory and see the app on your browser by copy-pasting the proper flask app ip address 
 
-
+<img width="1120" height="809" alt="UI for app" src="https://github.com/user-attachments/assets/9523b551-e966-42cb-9c89-6e39c576f9d9" />
