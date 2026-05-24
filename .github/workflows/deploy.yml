@@ -10,6 +10,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Validate Azure secrets (debug-safe)
+        run: |
+          test -n "$CLIENT_ID"
+          test -n "$TENANT_ID"
+          test -n "$SUBSCRIPTION_ID"
+        env:
+          CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+          SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
       - name: Log in to Azure
         uses: azure/login@v2
         with:
