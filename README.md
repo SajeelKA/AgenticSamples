@@ -1,11 +1,9 @@
-This repository is an example of an interactive chat application that uses Retrieval Augmented Generation to help solve the user's debugging issues
+This repository is meant to contain examples of Agentic workflows and applications for different use cases.
 
-The code uses "FAISS" to vectorize inputs and find the proper context from the document based on the input question
+# Features explored in this repository:
 
-Next, it generates the required outputs by feeding the proper context into the LLM (GPT-4o-mini)
-
-To run the file, clone the repository, make sure you have a ".env" file within this directory and input OPENAI_API_KEY="YOUR KEY" in it
-
-Next, run the command "python app.py" from the root directory and see the app on your browser by copy-pasting the proper flask app ip address 
-
-<img width="1120" height="809" alt="image" src="https://github.com/user-attachments/assets/7b2dae88-4f51-473a-aa80-fc87d173310a" />
+- Creating Documents utilizing user history and later referring to them for RAG
+- Creating collection on vector database to use for similarity searches
+- Using MCP tools within applications to enhance result quality
+- Using Cloud storage through API
+- Creating docker file to containerize application
