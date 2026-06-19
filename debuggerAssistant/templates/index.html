@@ -1,122 +1,194 @@
-
 <!DOCTYPE html>
 <html>
 <head>
-    <title> Personalized Debugging Assistant </title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f5f5f5;
-        }
-        .chat-container {
-            width: vw;
-            height: vh;
-            margin: 40px auto;
-            background: black;
-            border-radius: 10px;
-            padding: 50px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.5);
-        }
-        .messages {
-            display: flex;
-		    flex-direction: column;
-            height: 400px;
-            overflow-y: auto;
-            border-bottom: 1px solid #ddd;
-            margin-bottom: 10px;
-            word-wrap: break-word;
-		    overflow-wrap: break-word;
-        }
-        .message {        
-            display: block;
-		    margin: 10px 0;
-		    max-width: 80%;
-        }
-        .user {
-        	align-self: flex-start; 
-            color: blue;            
-			background: #e3f2fd;
-			padding: 20px;
-			border-radius: 10px;
-			display: inline-block;
-			max-width: 80%;
-        }
-        .bot {
-	        align-self: flex-end; 
-            color: green;
-			background: #e8f5e9;
-			padding: 20px;
-			border-radius: 10px;
-			display: inline-block;
-			max-width: 80%;
-        }
-        .thinking {
-	        align-self: flex-end; 
-	        color: white;
-			font-weight: bold;
-			padding: 20px;
-			border-radius: 10px;
-			display: inline-block;
-			max-width: 80%;
-        }
-        .input-box {
-            display: flex;
-        }
-        input {
-            flex: 1;
-            padding: 10px;
-        }
-        button {
-            padding: 10px;
-        }
-        .feedback {
-            margin-top: 5px;
-        }
-        .header{
-        	color: White
-        }
-        textarea {
-			flex: 1;
-			padding: 10px;
-			resize: none;         
-			border-radius: 5px;
-			border: 1px solid #ccc;
-		}
-		.selected-up {
-    		color: green;
-		}
+<title>Personal Debugging Assistant</title>
 
-		.selected-down {
-			color: red;
-		}
-    </style>
+<style>
+:root {
+    --bg: #0f172a;
+    --panel: #111827;
+    --user: #3b82f6;
+    --bot: #1f2937;
+    --text: #e5e7eb;
+    --muted: #9ca3af;
+    --accent: #22c55e;
+}
+
+/* PAGE */
+body {
+    margin: 0;
+    font-family: system-ui, Arial;
+    background: radial-gradient(circle at top, #111827, #0f172a);
+    color: var(--text);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* APP WRAPPER */
+.chat-container {
+    width: 90%;
+    max-width: 900px;
+    height: 90vh;
+    background: var(--panel);
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+}
+
+/* HEADER */
+.header {
+    padding: 16px;
+    font-size: 18px;
+    font-weight: 600;
+    border-bottom: 1px solid #1f2937;
+}
+
+/* MESSAGES */
+.messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* MESSAGE BASE */
+.message {
+    max-width: 75%;
+    padding: 12px 14px;
+    border-radius: 14px;
+    line-height: 1.4;
+    font-size: 14px;
+    white-space: pre-wrap;
+}
+
+/* USER */
+.user {
+    align-self: flex-end;
+    background: var(--user);
+    color: white;
+    border-bottom-right-radius: 4px;
+}
+
+/* BOT */
+.bot {
+    align-self: flex-start;
+    background: var(--bot);
+    color: var(--text);
+    border-bottom-left-radius: 4px;
+}
+
+/* THINKING */
+.thinking {
+    align-self: flex-start;
+    color: var(--muted);
+    font-style: italic;
+}
+
+/* INPUT BAR */
+.input-box {
+    display: flex;
+    gap: 10px;
+    padding: 14px;
+    border-top: 1px solid #1f2937;
+    background: #0b1220;
+}
+
+textarea {
+    flex: 1;
+    resize: none;
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    background: #111827;
+    color: white;
+}
+
+button {
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    background: var(--user);
+    color: white;
+    transition: 0.2s;
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+/* FILE BUTTON */
+.file-btn {
+    background: #374151;
+}
+
+/* FEEDBACK */
+.feedback {
+    margin-top: 8px;
+    display: flex;
+    gap: 8px;
+}
+
+.feedback button {
+    font-size: 12px;
+    padding: 6px 10px;
+    background: #374151;
+}
+
+.selected-up {
+    background: var(--accent) !important;
+}
+
+.selected-down {
+    background: #ef4444 !important;
+}
+
+/* CODE BLOCK */
+pre {
+    background: #0b1220;
+    padding: 10px;
+    border-radius: 8px;
+    overflow-x: auto;
+}
+
+/* SCROLLBAR */
+.messages::-webkit-scrollbar {
+    width: 6px;
+}
+.messages::-webkit-scrollbar-thumb {
+    background: #374151;
+    border-radius: 10px;
+}
+</style>
 </head>
+
 <body>
 
 <div class="chat-container">
-    <h2 class="header">Personal Debugging Assistant</h2>
+
+    <div class="header">🧠 Personal Debugging Assistant</div>
+
     <div class="messages" id="messages"></div>
 
-
     <div class="input-box">
-    	<button style="margin:auto;display:block;width:30px; height:60px;" onclick="document.getElementById('fileInput').click()">+</button>
-    	<input type='file' id="fileInput" style="display:none">	    
-		<textarea id="question" placeholder="Ask a debugging question..." rows="4"></textarea>		
-		<button onclick="sendMessage()">Send</button>
+        <button class="file-btn" onclick="document.getElementById('fileInput').click()">+</button>
+        <input type="file" id="fileInput" style="display:none">
 
-	</div>
-	<button onclick="downloadTodayHistory()">Download Today's History</button>
+        <textarea id="question" placeholder="Ask a debugging question..."></textarea>
 
+        <button onclick="sendMessage()">Send</button>
+    </div>
 </div>
 
 <script>
 
-document.getElementById("question").addEventListener("keypress", function(event) {
-    if (event.key === "Enter") {
-        event.preventDefault();  // prevents newline / form submit
-        sendMessage();
-    }
-});
 
 let sessionId = localStorage.getItem("session_id");
 if (!sessionId) {
@@ -124,31 +196,77 @@ if (!sessionId) {
     localStorage.setItem("session_id", sessionId);
 }
 
+
 function formatCode(text) {
     return text.replace(/```([\s\S]*?)```/g, "<pre><code>$1</code></pre>");
 }
 
 function formatText(text) {
-	text = formatCode(text);
-    return text.replace(/\n/g, "<br>");
+    return formatCode(text).replace(/\n/g, "<br>");
 }
+
+
+function addMessage(text, sender) {
+    const div = document.createElement("div");
+    div.className = "message " + sender;
+    div.innerHTML = formatText(text);
+    document.getElementById("messages").appendChild(div);
+    scrollBottom();
+}
+
 
 function addThinkingMessage() {
-    const msgDiv = document.createElement("div");
-    msgDiv.className = "message thinking";
-    msgDiv.id = "thinking-message";
+    const div = document.createElement("div");
+    div.className = "message thinking";
+    div.id = "thinking";
+    
+    div.innerHTML = "<br> Thinking <br> <img src='static/images/InferinsicsLogo.png') }}' alt ='...Thinking...' style='width: 450px; height: 150px;' />";
+
+    document.getElementById("messages").appendChild(div);
+    scrollBottom();
+    return div;
+}
+
+
+function addBotMessage(text, id) {
+    const div = document.createElement("div");
+    div.className = "message bot";
 
     const content = document.createElement("div");
-    content.innerHTML = "<br> Thinking <br> <img src='static/images/InferinsicsLogo.png') }}' alt ='...Thinking...' style='width: 450px; height: 150px;' />";
+    content.innerHTML = formatText(text);
 
-    msgDiv.appendChild(content);
+    const fb = document.createElement("div");
+    fb.className = "feedback";
 
-    const messages = document.getElementById("messages");
-    messages.appendChild(msgDiv);
-    messages.scrollTop = messages.scrollHeight;
+    const up = document.createElement("button");
+    const down = document.createElement("button");
 
-    return msgDiv;
+    up.innerText = "👍 Better";
+    down.innerText = "👎 Still trying";
+
+    up.onclick = () => {
+        sendFeedback(id, true);
+        up.classList.add("selected-up");
+        up.disabled = down.disabled = true;
+    };
+
+    down.onclick = () => {
+        sendFeedback(id, false);
+        down.classList.add("selected-down");
+        up.disabled = down.disabled = true;
+    };
+
+    fb.appendChild(up);
+    fb.appendChild(down);
+
+    div.appendChild(content);
+    div.appendChild(fb);
+
+    document.getElementById("messages").appendChild(div);
+    scrollBottom();
 }
+
+
 async function sendMessage() {
     const input = document.getElementById("question");
     const fileInput = document.getElementById("fileInput");
@@ -158,111 +276,54 @@ async function sendMessage() {
 
     if (!text && !file) return;
 
-    addMessage(text || "Uploaded item: ${file.name}", "user");
+    addMessage(text || `Uploaded: ${file?.name}`, "user");
 
     input.value = "";
     fileInput.value = "";
-	const thinkingMsg = addThinkingMessage();
-	
+
+    const thinking = addThinkingMessage();
+
     const formData = new FormData();
     formData.append("question", text);
     formData.append("session_id", sessionId);
 
-    if (file) {
-        formData.append("file", file);
-    }
-	
+    if (file) formData.append("file", file);
+
     const res = await fetch("/ask", {
         method: "POST",
         body: formData
     });
 
     const data = await res.json();
-    thinkingMsg.remove();
+
+    thinking.remove();
     addBotMessage(data.answer, data.id);
-    const tokenMeter = document.getElementById("tokens");
-    let total = Number(data.tokens_used)	
-	
-	if (tokenMeter.innerText != "Tokens used so far:"){
-		console.log(tokenMeter.innerText)
-		total += Number(tokenMeter.innerText) 
-	}
-
-    tokenMeter.innerText = total;
-    
 }
 
-function addMessage(text, sender) {
-    const msgDiv = document.createElement("div");
-    msgDiv.className = "message " + sender;
-    msgDiv.innerHTML = formatText(text);
-    const messages = document.getElementById("messages");
-    messages.appendChild(msgDiv);
-	messages.scrollTop = messages.scrollHeight;
-}
-
-function addBotMessage(text, id) {
-    const msgDiv = document.createElement("div");
-    msgDiv.className = "message bot";
-
-    const content = document.createElement("div");
-    content.innerHTML = formatText(text);
-
-    const feedback = document.createElement("div");
-    feedback.className = "feedback";
-
-    const up = document.createElement("button");
-    up.dataset.id = id;
-
-    up.innerHTML = "Better?";
-	up.onclick = (e) => {
-							sendFeedback(e.target.dataset.id, true);
-							e.target.classList.add("selected-up");
-							up.innerText="Saved";
-							up.disabled=true;
-							down.disabled=true;
-						};
-
-    const down = document.createElement("button");
-   	down.dataset.id = id;
-   	
-    down.innerHTML = "Still trying?";
-	down.onclick = (e) => {
-							sendFeedback(e.target.dataset.id, false);
-							e.target.classList.add("selected-down");
-							down.innerText="Saved";
-							up.disabled=true;
-							down.disabled=true;
-
-							};
-
-    feedback.appendChild(up);
-    feedback.appendChild(down);
-
-    msgDiv.appendChild(content);
-    msgDiv.appendChild(feedback);
-    document.getElementById("messages").appendChild(msgDiv);
-	const messages = document.getElementById("messages");
-	messages.scrollTop = messages.scrollHeight;
-}
 
 async function sendFeedback(id, success) {
     await fetch("/feedback", {
         method: "POST",
         headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({id: id, success: success})
+        body: JSON.stringify({id, success})
     });
-
 }
 
-async function downloadTodayHistory() {
 
-	window.location.href = "/downloadChatHistory";
+function scrollBottom() {
+    const el = document.getElementById("messages");
+    el.scrollTop = el.scrollHeight;
 }
+
+
+document.getElementById("question").addEventListener("keypress", e => {
+    if (e.key === "Enter") {
+        e.preventDefault();
+        sendMessage();
+    }
+});
 
 </script>
 
 </body>
 </html>
-
-
