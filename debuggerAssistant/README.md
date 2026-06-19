@@ -1,4 +1,4 @@
-This directory contains an example of an FastAPI interactive chat application using Langgraph:
+This directory contains an example of an FastAPI interactive troubleshooting chat application using Langgraph:
 
 ## Features:
 - RAG using stored previous conversation history
